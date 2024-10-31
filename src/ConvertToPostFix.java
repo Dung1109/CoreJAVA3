@@ -19,8 +19,8 @@ public class ConvertToPostFix {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     System.out.println("Enter the formula: ");
-//    String formula = sc.nextLine();
-    String formula = "(1+3*3)/2+(4+5^3)/3";
+    String formula = sc.nextLine();
+//    String formula = "(1+3*3)/2+(4+5^3)/3";
     System.out.println("Postfix expression: " + infixToPostfix(formula));
     System.out.println("Result: " + evaluatePostfix(infixToPostfix(formula)));
 
@@ -46,6 +46,7 @@ public class ConvertToPostFix {
             stack.push(b * a);
             break;
           case '/':
+            if(a == 0) throw new ArithmeticException("Cannot divide by zero");
             stack.push(b / a);
             break;
           case '^':
@@ -86,14 +87,10 @@ public class ConvertToPostFix {
 
   private static int getPrecedence(char c) {
     switch (c) {
-      case '+':
-      case '-':
-        return 1;
-      case '*':
-      case '/':
-        return 2;
-      case '^':
-        return 3;
+      case '+', '-' -> {return 1;}
+      case '*','/' -> {return 2;}
+      case '^' ->   { return 3;}
+
     }
     return -1;
   }
